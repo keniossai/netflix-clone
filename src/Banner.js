@@ -11,7 +11,9 @@ function Banner() {
 		async function fetchData() {
 			const request = await axios.get(requests.fetchNetflixOriginal)
 			setMovie(
-				request.data.results[Math.floor(Math.random() * request.data.results.length - 1)]
+				request.data.results[
+					Math.floor(Math.random() * request.data.results.length - 1)
+				]
 			)
 			return request
 		}
@@ -19,6 +21,10 @@ function Banner() {
 	}, [])
 
 	console.log(movie)
+
+	function truncate(string, n) {
+		return string?.length > n ? string.substr(0, n - 1) + '...' : string
+	}
 	return (
 		<header
 			className='banner'
@@ -30,15 +36,18 @@ function Banner() {
 		>
 			<div className='banner-contents'>
 				{/* Title */}
-				<h1>{movie?.title || movie?.name || movie?.original_name}</h1>
-			{/* div > 2 buttons */}
+				<h1 className='banner-title'>
+					{movie?.title || movie?.name || movie?.original_name}
+				</h1>
+				{/* div > 2 buttons */}
 				<div className='banner-buttons'>
 					<button className='banner-button'>Play</button>
 					<button className='banner-button'>My List</button>
 				</div>
-			{/* Description */}
-                <h1 className="banner-description">{movie?.overview}</h1>
+				{/* Description */}
+				<h1 className='banner-description'>{truncate(movie?.overview, 150)}</h1>
 			</div>
+            <div className="banner-fadeBottom"></div>
 		</header>
 	)
 }
